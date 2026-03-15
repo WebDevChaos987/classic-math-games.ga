@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Classic Math Games&trade;</title>
+    <style>
+      body {
+        background-color: #1a1a1a;
+        color: rgb(255, 255, 255);
+        font-family: "Lucida Console", "Courier New", monospace;
+        text-align: center;
+      }
+      h1 {
+        font-size: 55px !important;
+        margin-top: 50px;
+        color: rgb(255, 165, 0);
+      }
+      .btn {
+        width: 135px;
+        height: 20px;
+        border-radius: 67px;
+        background-color: rgb(255, 165, 0);
+        color: rgb(128, 0, 0);
+        border: none;
+        cursor: pointer;
+      }
+      input {
+        background: #333;
+        color: lime;
+        border: 1px solid orange;
+        font-size: 20px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="game-container">
+      <header>
+        <h1>Classic Math Games&trade;</h1>
+        <button class="btn" onclick="start()">Play</button>
+      </header>
+    </div>
+
+    <script>
+      let ans = 0;
+
+      function start() {
+        document.getElementById('game-container').innerHTML = `
+          <header id="header-2">
+            <h1>Classic Math Games&trade;</h1>
+            <button class="btn" onclick="runGame('+')">Adding</button>
+            <br><br>
+            <button class="btn" onclick="runGame('-')">Subtract</button>
+            <br><br>
+            <button class="btn" onclick="runGame('*')">Multiply</button>
+            <br><br>
+            <button class="btn" onclick="runGame('/')">Division</button>
+          </header>
+        `;
+      }
+
+      function runGame(op) {
+        let n1 = Math.floor(Math.random() * 12) + 1;
+        let n2 = Math.floor(Math.random() * 12) + 1;
+
+        if (op === '+') ans = n1 + n2;
+        if (op === '-') ans = n1 - n2;
+        if (op === '*') ans = n1 * n2;
+        if (op === '/') {
+          n1 = n1 * n2;
+          ans = n1 / n2;
+        }
+
+        // Using a cleaner way to update the screen without breaking the backticks
+        let gameHTML = "<h1>Classic Math Games&trade;</h1>";
+        gameHTML += "<h2>Solve: " + n1 + " " + op + " " + n2 + "</h2>";
+        gameHTML += "<br><br><br><br><br><br><br><br><br><br>";
+        gameHTML += "<input type='number' id='in' autofocus>";
+        gameHTML += "<br><br>";
+        gameHTML += "<button class='btn' onclick='check(\"" + op + "\")'>Submit</button>";
+
+        document.getElementById('game-container').innerHTML = gameHTML;
+      }
+
+      function check(op) {
+        let userValue = document.getElementById('in').value;
+        if (userValue !== "" && parseInt(userValue) === ans) {
+          alert("Correct!");
+          runGame(op);
+        } else {
+          alert("Wrong! Booting...");
+          location.reload();
+        }
+      }
+    </script>
+  </body>
+</html>
